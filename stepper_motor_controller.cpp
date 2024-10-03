@@ -123,6 +123,4 @@ void updateMotorByAcceleration(uint16_t currentCount, float acceleration, float 
 
 //         // update last motor update count
 //         lastMotorUpdateCount += currentMotorInterval;
-//         *currentPosition += 1.0f * LENGTH_CALIBRATION * direction / METER_PER_STEP;
-//     }
-// }
+//         *currentPosition += 1.0f 
