@@ -98,31 +98,31 @@ void updateMotorByAcceleration(uint16_t currentCount, float acceleration, float 
     }
 }
 
-void updateMotorByVelocity(uint16_t currentCount, float velocity, float *currentPosition)
-{
-    direction = sign(velocity);
-    float currentMotorInterval = direction * COUNT_PER_SECOND / (METER_PER_STEP * velocity);
-    if (currentCount - lastMotorUpdateCount >= currentMotorInterval)
-    {
-        moveOneStep();
+// void updateMotorByVelocity(uint16_t currentCount, float velocity, float *currentPosition)
+// {
+//     direction = sign(velocity);
+//     float currentMotorInterval = direction * COUNT_PER_SECOND / (METER_PER_STEP * velocity);
+//     if (currentCount - lastMotorUpdateCount >= currentMotorInterval)
+//     {
+//         moveOneStep();
 
-        float newMotorInterval = currentMotorInterval * SI_ACCEL_TO_HW_ACCEL / (SI_ACCEL_TO_HW_ACCEL + acceleration * currentMotorInterval * currentMotorInterval);
+//         float newMotorInterval = currentMotorInterval * SI_ACCEL_TO_HW_ACCEL / (SI_ACCEL_TO_HW_ACCEL + acceleration * currentMotorInterval * currentMotorInterval);
 
-        if (newMotorInterval < MIN_INTERVAL)
-            newMotorInterval = MIN_INTERVAL;
+//         if (newMotorInterval < MIN_INTERVAL)
+//             newMotorInterval = MIN_INTERVAL;
 
-        // update position of cart (m) (when tick = 1)
-        *currentPosition += 1.0f / TICK_PER_METER;
+//         // update position of cart (m) (when tick = 1)
+//         *currentPosition += 1.0f / TICK_PER_METER;
 
-        // update velocity of cart (m/s)
-        // (count/s) / (tick/m * count) = m/s (when tick = 1)
-        *currentVelocity = COUNT_PER_SECOND / (TICK_PER_METER * currentMotorInterval);
+//         // update velocity of cart (m/s)
+//         // (count/s) / (tick/m * count) = m/s (when tick = 1)
+//         *currentVelocity = COUNT_PER_SECOND / (TICK_PER_METER * currentMotorInterval);
 
-        // update interval
-        currentMotorInterval = newMotorInterval;
+//         // update interval
+//         currentMotorInterval = newMotorInterval;
 
-        // update last motor update count
-        lastMotorUpdateCount += currentMotorInterval;
-        *currentPosition += 1.0f * LENGTH_CALIBRATION * direction / METER_PER_STEP;
-    }
-}
+//         // update last motor update count
+//         lastMotorUpdateCount += currentMotorInterval;
+//         *currentPosition += 1.0f * LENGTH_CALIBRATION * direction / METER_PER_STEP;
+//     }
+// }

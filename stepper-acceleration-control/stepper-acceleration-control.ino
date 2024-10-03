@@ -16,34 +16,34 @@ void setup()
   pinMode(A0, INPUT);
 
   // First alignment
-  while (analogRead(A0) < 100)
-  {
-    updateMotorByVelocity(getTimerCount(), 0.1, &currentPosition);
-  }
-  updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
-  currentPosition = 0;
+  // while (analogRead(A0) < 100)
+  // {
+  //   updateMotorByVelocity(getTimerCount(), 0.1, &currentPosition);
+  // }
+  // updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
+  // currentPosition = 0;
 
-  // Move to left
-  while (currentPosition > -0.03f)
-  {
-    updateMotorByVelocity(getTimerCount(), -0.02, &currentPosition);
-  }
+  // // Move to left
+  // while (currentPosition > -0.03f)
+  // {
+  //   updateMotorByVelocity(getTimerCount(), -0.02, &currentPosition);
+  // }
 
   // Second alignment
-  while (analogRead(A0) < 100)
-  {
-    updateMotorByVelocity(getTimerCount(), 0.01, &currentPosition);
-  }
-  updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
-  currentPosition = 0;
+  // while (analogRead(A0) < 100)
+  // {
+  //   updateMotorByVelocity(getTimerCount(), 0.01, &currentPosition);
+  // }
+  // updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
+  // currentPosition = 0;
 
   // Move to home position
-  currentPosition = 0.34f;
-  while (currentPosition > 0)
-  {
-    updateMotorByVelocity(getTimerCount(), -0.05, &currentPosition);
-  }
-  updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
+  // currentPosition = 0.34f;
+  // while (currentPosition > 0)
+  // {
+  //   updateMotorByVelocity(getTimerCount(), -0.05, &currentPosition);
+  // }
+  // updateMotorByVelocity(getTimerCount(), 0, &currentPosition);
 
   uint16_t loggingInterval = 2500;
   uint16_t lastLogging = 0;
@@ -59,7 +59,7 @@ void setup()
     uint16_t currentCount = getTimerCount();
 
     // Motor control
-    updateMotorByAcceleration(currentCount, acceleration, &currentVelocity, &currentPosition);
+    updateMotorByAcceleration(currentCount, 0.01, &currentVelocity, &currentPosition);
 
     // Command input
     if (getByte(&byte))
@@ -106,25 +106,8 @@ void setup()
         putByte('-');
         tmp *= -1;
       }
-      do
-      {
-        putByte('0' + tmp % 10);
-        tmp /= 10;
-      } while (tmp);
-
-      putByte('\n');
-
-      lastLogging += loggingInterval;
     }
-
-    processUart();
-
-    // safe for test
-    if (currentPosition < -0.34 || currentPosition > 0.34)
-      break;
   }
-
-  finalizeStepperMotorPins();
-  while (1)
-    ;
 }
+      
+void loop() {} 
